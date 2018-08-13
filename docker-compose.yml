@@ -1,3 +1,4 @@
+version: '2'
 services:
   zookeeper:
     image: wurstmeister/zookeeper
@@ -10,11 +11,11 @@ services:
       - "9094"
     environment:
       PORT_COMMAND: "docker port $$(hostname) 9094/tcp | cut -d: -f2"
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://YOUR_PUBLIC_IP:_{PORT_COMMAND}
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://10.61.212.36:_{PORT_COMMAND}
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "sa:2:1,batch_events:2:1,alerts:1:1,"
+      KAFKA_CREATE_TOPICS: "sa:1:1,batch_events:1:1,alerts:1:1,"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
